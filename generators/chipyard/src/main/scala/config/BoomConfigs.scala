@@ -43,3 +43,61 @@ class DromajoBoomConfig extends Config(
   new chipyard.config.WithTraceIO ++                             // enable the traceio
   new boom.common.WithNSmallBooms(1) ++
   new chipyard.config.AbstractConfig)
+
+class MyBoomConfig extends Config(
+  new boom.common.WithNSmallBooms(2) ++
+
+  new chipyard.harness.WithBlackBoxSimMem ++
+  new chipyard.harness.WithSimAXIMMIO ++
+  new chipyard.harness.WithTieOffInterrupts ++
+  new chipyard.harness.WithTieOffL2FBusAXI ++
+  new chipyard.harness.WithClockAndResetFromHarness ++
+
+  new chipyard.iobinders.WithAXI4MemPunchthrough ++
+  new chipyard.iobinders.WithAXI4MMIOPunchthrough ++
+  new chipyard.iobinders.WithL2FBusAXI4Punchthrough ++
+  new chipyard.iobinders.WithExtInterruptIOCells ++
+  new chipyard.iobinders.WithDividerOnlyClockGenerator ++
+
+  new chipyard.config.WithNoSubsystemDrivenClocks ++
+  new chipyard.config.WithInheritBusFrequencyAssignments ++
+  new chipyard.config.WithPeripheryBusFrequencyAsDefault ++
+  new chipyard.config.WithMemoryBusFrequency(75) ++
+  new chipyard.config.WithPeripheryBusFrequency(75) ++
+  new freechips.rocketchip.subsystem.WithTimebase(75000000) ++
+  new freechips.rocketchip.subsystem.WithInclusiveCache ++
+  new freechips.rocketchip.subsystem.WithNExtTopInterrupts(4) ++
+  new freechips.rocketchip.subsystem.WithDontDriveBusClocksFromSBus ++
+  new freechips.rocketchip.subsystem.WithCoherentBusTopology ++
+  new freechips.rocketchip.subsystem.WithExtMemSize(0x80000000L) ++
+  new freechips.rocketchip.subsystem.WithBootROMFile("bootrom/bootrom.rv64.img") ++
+  new freechips.rocketchip.system.BaseConfig)
+
+class MyBoomConfig2 extends Config(
+  new boom.common.WithNMediumBooms(2) ++
+
+  new chipyard.harness.WithBlackBoxSimMem ++
+  new chipyard.harness.WithSimAXIMMIO ++
+  new chipyard.harness.WithTieOffInterrupts ++
+  new chipyard.harness.WithTieOffL2FBusAXI ++
+  new chipyard.harness.WithClockAndResetFromHarness ++
+
+  new chipyard.iobinders.WithAXI4MemPunchthrough ++
+  new chipyard.iobinders.WithAXI4MMIOPunchthrough ++
+  new chipyard.iobinders.WithL2FBusAXI4Punchthrough ++
+  new chipyard.iobinders.WithExtInterruptIOCells ++
+  new chipyard.iobinders.WithDividerOnlyClockGenerator ++
+
+  new chipyard.config.WithNoSubsystemDrivenClocks ++
+  new chipyard.config.WithInheritBusFrequencyAssignments ++
+  new chipyard.config.WithPeripheryBusFrequencyAsDefault ++
+  new chipyard.config.WithMemoryBusFrequency(100) ++
+  new chipyard.config.WithPeripheryBusFrequency(100) ++
+  new freechips.rocketchip.subsystem.WithTimebase(100000000) ++
+  new freechips.rocketchip.subsystem.WithInclusiveCache ++
+  new freechips.rocketchip.subsystem.WithNExtTopInterrupts(4) ++
+  new freechips.rocketchip.subsystem.WithDontDriveBusClocksFromSBus ++
+  new freechips.rocketchip.subsystem.WithCoherentBusTopology ++
+  new freechips.rocketchip.subsystem.WithExtMemSize(0x80000000L) ++
+  new freechips.rocketchip.subsystem.WithBootROMFile("bootrom/bootrom.rv64.img") ++
+  new freechips.rocketchip.system.BaseConfig)
