@@ -91,6 +91,7 @@ class CYYSoCConfig extends Config(
   new chipyard.config.WithNoSubsystemDrivenClocks ++                // drive the subsystem diplomatic clocks from ChipTop instead of using implicit clocks
   new chipyard.config.WithInheritBusFrequencyAssignments ++         // Unspecified clocks within a bus will receive the bus frequency if set
   new freechips.rocketchip.subsystem.WithNMemoryChannels(1) ++      // Default 1 memory channels
+  new freechips.rocketchip.subsystem.WithJtagDTM ++                 // set the debug module to expose a JTAG port
   new freechips.rocketchip.subsystem.WithClockGateModel ++          // add default EICG_wrapper clock gate model
   new freechips.rocketchip.subsystem.WithInclusiveCache ++          // use Sifive L2 cache
   new freechips.rocketchip.subsystem.WithNExtTopInterrupts(4) ++    // no external interrupts
