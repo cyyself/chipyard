@@ -65,6 +65,7 @@ class CYYSoCConfig extends Config(
   new boom.common.WithNSmallBooms(2) ++
   // The HarnessBinders control generation of hardware in the TestHarness
   new chipyard.harness.WithBlackBoxSimMem ++                       // add SimDRAM DRAM model for axi4 backing memory, if axi4 mem is enabled
+  new chipyard.harness.WithSimDebug ++                             // add SimJTAG or SimDTM adapters if debug module is enabled
   new chipyard.harness.WithSimAXIMMIO ++                           // add SimAXIMem for axi4 mmio port, if enabled
   new chipyard.harness.WithTieOffInterrupts ++                     // tie-off interrupt ports, if present
   new chipyard.harness.WithTieOffL2FBusAXI ++                      // tie-off external AXI4 master, if present
@@ -72,18 +73,19 @@ class CYYSoCConfig extends Config(
   new chipyard.harness.WithAbsoluteFreqHarnessClockInstantiator ++ // generate clocks in harness with unsynthesizable ClockSourceAtFreqMHz
 
   // The IOBinders instantiate ChipTop IOs to match desired digital IOs
-  // IOCells are generated for "Chip-like" IOs, while simulation-only IOs are directly punched through
+  // IOCells are generated for "Chip-like" IOs
+  new chipyard.iobinders.WithDebugIOCells ++
+  new chipyard.iobinders.WithExtInterruptIOCells ++
   new chipyard.iobinders.WithAXI4MemPunchthrough ++
   new chipyard.iobinders.WithAXI4MMIOPunchthrough ++
   new chipyard.iobinders.WithL2FBusAXI4Punchthrough ++
-  new chipyard.iobinders.WithExtInterruptIOCells ++
 
   // By default, punch out IOs to the Harness
   new chipyard.clocking.WithPassthroughClockGenerator ++
   new chipyard.clocking.WithClockGroupsCombinedByName(("uncore", Seq("sbus", "mbus", "pbus", "fbus", "cbus", "implicit"), Seq("tile"))) ++
-  new chipyard.config.WithPeripheryBusFrequency(100.0) ++           // Default 100 MHz pbus
-  new chipyard.config.WithMemoryBusFrequency(100.0) ++              // Default 100 MHz mbus
-  new freechips.rocketchip.subsystem.WithTimebase(100000000) ++
+  new chipyard.config.WithPeripheryBusFrequency(80.0) ++           // 80 MHz pbus
+  new chipyard.config.WithMemoryBusFrequency(80.0) ++              // 80 MHz mbus
+  new freechips.rocketchip.subsystem.WithTimebase(80000000) ++
   new freechips.rocketchip.subsystem.WithExtMemSize(0x80000000L) ++
   new freechips.rocketchip.subsystem.WithBootROMFile("bootrom/bootrom.rv64.img") ++
 
@@ -91,8 +93,6 @@ class CYYSoCConfig extends Config(
   new chipyard.config.WithNoSubsystemDrivenClocks ++                // drive the subsystem diplomatic clocks from ChipTop instead of using implicit clocks
   new chipyard.config.WithInheritBusFrequencyAssignments ++         // Unspecified clocks within a bus will receive the bus frequency if set
   new freechips.rocketchip.subsystem.WithNMemoryChannels(1) ++      // Default 1 memory channels
-  new freechips.rocketchip.subsystem.WithJtagDTM ++                 // set the debug module to expose a JTAG port
-  new freechips.rocketchip.subsystem.WithClockGateModel ++          // add default EICG_wrapper clock gate model
   new freechips.rocketchip.subsystem.WithInclusiveCache ++          // use Sifive L2 cache
   new freechips.rocketchip.subsystem.WithNExtTopInterrupts(4) ++    // no external interrupts
   new freechips.rocketchip.subsystem.WithDontDriveBusClocksFromSBus ++ // leave the bus clocks undriven by sbus
