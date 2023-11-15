@@ -35,7 +35,7 @@ class ChipyardSystem(implicit p: Parameters) extends ChipyardSubsystem
   // If there is no bootrom, the tile reset vector bundle will be tied to zero
   if (bootROM.isEmpty) {
     val fakeResetVectorSourceNode = BundleBridgeSource[UInt]()
-    InModuleBody { fakeResetVectorSourceNode.bundle := 0.U }
+    InModuleBody { fakeResetVectorSourceNode.bundle := 0x60000000.U }
     tileResetVectorNexusNode := fakeResetVectorSourceNode
   }
 

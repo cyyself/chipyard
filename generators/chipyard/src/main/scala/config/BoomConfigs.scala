@@ -60,3 +60,16 @@ class dmiMediumBoomCosimConfig extends Config(
   new chipyard.config.WithDMIDTM ++                              // have debug module expose a clocked DMI port
   new boom.common.WithNMediumBooms(1) ++
   new chipyard.config.AbstractConfig)
+
+class CYYSoCConfig extends Config(
+  new boom.common.WithNSmallBooms(1) ++
+  new freechips.rocketchip.subsystem.WithTimebase(80000000) ++
+  new freechips.rocketchip.subsystem.WithExtMemSize(0x80000000L) ++
+  new freechips.rocketchip.subsystem.WithDefaultMMIOPort ++
+  new freechips.rocketchip.subsystem.WithDefaultSlavePort ++
+  new chipyard.config.WithPeripheryBusFrequency(80.0) ++
+  new chipyard.config.WithMemoryBusFrequency(80.0) ++
+  new freechips.rocketchip.subsystem.WithNExtTopInterrupts(4) ++
+  new chipyard.config.WithNoBootROM ++
+  new chipyard.config.AbstractConfig
+)
